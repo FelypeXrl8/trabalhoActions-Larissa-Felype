@@ -1,0 +1,18 @@
+name: Relatório em Um Step
+on: [push]
+
+jobs:
+  report_one:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tudo no mesmo step
+        run: |
+          echo "Ator: ${{ github.actor }}"
+          date -u +"%Y-%m-%d %H:%M:%S"
+          HTML=$(find . -type f -name '*.html' | wc -l)
+          CSS=$(find . -type f -name '*.css' | wc -l)
+          JS=$(find . -type f -name '*.js' | wc -l)
+          echo "HTML: $HTML"
+          echo "CSS:  $CSS"
+          echo "JS:   $JS"
