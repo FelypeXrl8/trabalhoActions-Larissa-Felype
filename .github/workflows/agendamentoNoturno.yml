@@ -1,0 +1,19 @@
+name: Rodar Apenas à Noite
+on:
+  schedule:
+    - cron: "0 * * * *"  # a cada hora
+  workflow_dispatch:
+
+jobs:
+  night:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Executar somente 22-06 UTC
+        run: |
+          H=$(date -u +%H)
+          echo "Hora UTC: $H"
+          if [ "$H" -ge 22 ] || [ "$H" -lt 6 ]; then
+            echo "Noite detectada. Executando tarefa..."
+          else
+            echo "Fora do horário noturno. Encerrando."
+            exit 0
