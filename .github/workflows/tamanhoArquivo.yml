@@ -1,0 +1,18 @@
+name: Alertar Arquivos >100KB
+on: [push]
+
+jobs:
+  size_check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verificar arquivos grandes
+        run: |
+          BIG=$(find . -type f -size +100k ! -path "./.git/*")
+          if [ -n "$BIG" ]; then
+            echo "Arquivos >100KB encontrados:"
+            echo "$BIG"
+            exit 1
+          else
+            echo "Nenhum arquivo >100KB."
+          fi
