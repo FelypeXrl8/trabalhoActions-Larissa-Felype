@@ -1,0 +1,19 @@
+name: Rodar Apenas aos Sábados
+on:
+  schedule:
+    - cron: "0 9 * * *"  # diariamente 09:00 UTC
+  workflow_dispatch:
+
+jobs:
+  saturday:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Executar somente no sábado (6)
+        run: |
+          DOW=$(date -u +%u)  # 1=Seg ... 7=Dom
+          echo "Dia da semana: $DOW"
+          if [ "$DOW" -eq 6 ]; then
+            echo "Hoje é sábado. Executando..."
+          else
+            echo "Não é sábado. Encerrando."
+            exit 0
