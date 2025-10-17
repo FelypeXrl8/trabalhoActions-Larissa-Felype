@@ -1,0 +1,32 @@
+name: Relatório em Sequência
+on: [push]
+
+jobs:
+  report_seq:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Data/Hora (UTC)
+        run: date -u +"%Y-%m-%d %H:%M:%S"
+
+      - name: Usuário
+        run: echo "Ator: ${{ github.actor }}"
+
+      - name: Contar HTML
+        id: html
+        run: echo "count=$(find . -type f -name '*.html' | wc -l)" >> $GITHUB_OUTPUT
+
+      - name: Contar CSS
+        id: css
+        run: echo "count=$(find . -type f -name '*.css' | wc -l)" >> $GITHUB_OUTPUT
+
+      - name: Contar JS
+        id: js
+        run: echo "count=$(find . -type f -name '*.js' | wc -l)" >> $GITHUB_OUTPUT
+
+      - name: Resumo
+        run: |
+          echo "HTML: ${{ steps.html.outputs.count }}"
+          echo "CSS:  ${{ steps.css.outputs.count }}"
+          echo "JS:   ${{ steps.js.outputs.count }}"
